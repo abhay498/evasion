@@ -63,8 +63,6 @@ def crash():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-                
-    #gameDisplay.fill(white)
 
         button("Play Again",150,450,100,50,green,bright_green,game_loop)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
@@ -112,8 +110,6 @@ def paused():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
-                
-    #gameDisplay.fill(white)
 
         button("Continue",150,450,100,50,green,bright_green,unpause)
         button("Quit",550,450,100,50,red,bright_red,quitgame)
@@ -185,7 +181,6 @@ def game_loop():
                 
         gameDisplay.fill(white)
 
-        #things(thingx,thingy,thingw,thingh,color):
         things(thing_startx,thing_starty,thing_width,thing_height,block_color)
         thing_starty += thing_speed
         car(x,y)
@@ -215,5 +210,3 @@ game_intro()
 game_loop()    
 pygame.quit()
 quit()
-
-###
