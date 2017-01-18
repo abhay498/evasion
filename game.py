@@ -5,8 +5,9 @@ import random
 pygame.init()
 
 crash_sound = pygame.mixer.Sound("crash.wav")
-pygame.mixer.music.load("jazz.wav")
 
+block_color = (53,115,255)
+car_width = 73
 display_width = 800
 display_height = 600
 
@@ -27,12 +28,12 @@ carImg = pygame.image.load('reds.png')
 game_icon = pygame.image.load('car.png')
 pygame.display.set_icon(game_icon)
 
-car_width = 73
+
 
 pause = False
 
 def things_dodged(count):
-    font = pygame.font.SysFont(None,25)
+    font = pygame.font.SysFont("comicsansms", 25)
     text = font.render("Dodged:"+str(count),True,black)
     gameDisplay.blit(text,(0,0))
     
@@ -48,10 +49,10 @@ def text_objects(text,font):
     
 def crash():
 
-    pygame.mixer.music.stop()
     pygame.mixer.Sound.play(crash_sound)
+    pygame.mixer.music.stop()
     
-    large_text = pygame.font.Font('freesansbold.ttf',115)
+    large_text = pygame.font.SysFont("comicsansms",115)
     TextSurf, TextRect = text_objects("You crashed",large_text)
     TextRect.center = ((display_width/2),(display_height/2))
     gameDisplay.blit(TextSurf,TextRect)
@@ -65,16 +66,16 @@ def crash():
                 
     #gameDisplay.fill(white)
 
-    button("Play Again",150,450,100,50,green,bright_green,game_loop)
-    button("Quit",150,450,100,50,red,bright_red,"quit")
+        button("Play Again",150,450,100,50,green,bright_green,game_loop)
+        button("Quit",550,450,100,50,red,bright_red,quitgame)
     
-    pygame.display.update()
-    clock.tick(15)
+        pygame.display.update()
+        clock.tick(15)
 
 def button(msg,x,y,w,h,ic,ac,action = None):
     mouse = pygame.mouse.get_pos()
     click = pygame.mouse.get_pressed()
-    print(click)
+    #print(click)
     #print(mouse)
     if x + w > mouse[0] > x and y + h > mouse[1] > y:
         pygame.draw.rect(gameDisplay,ac,(x,y,w,h))
@@ -83,12 +84,10 @@ def button(msg,x,y,w,h,ic,ac,action = None):
     else:
         pygame.draw.rect(gameDisplay,ic,(x,y,w,h))
 
-    smallText = pygame.font.Font("freesansbold.ttf",20)
+    smallText = pygame.font.SysFont("comicsansms",20)
     textSurf, textRect = text_objects(msg,smallText)
-    textRect.center = ( (x + (w/2)),y + (h/2))
+    textRect.center = ( (x + (w/2)),(y + (h/2)))
     gameDisplay.blit(textSurf,textRect)
-    
-    pygame.draw.rect(gameDisplay,red,(550,450,100,50))
 
 def quitgame():
     pygame.quit()
@@ -96,12 +95,13 @@ def quitgame():
     
 def unpause():
     global pause
+    pygame.mixer.music.unpause()
     pause = False
     
 def paused():
 
     pygame.mixer.music.pause()
-    large_text = pygame.font.Font('freesansbold.ttf',115)
+    large_text = pygame.font.SysFont("comicsansms",115)
     TextSurf, TextRect = text_objects("Paused",large_text)
     TextRect.center = ((display_width/2),(display_height/2))
     gameDisplay.blit(TextSurf,TextRect)
@@ -115,52 +115,38 @@ def paused():
                 
     #gameDisplay.fill(white)
 
-
-    button("Continue",150,450,100,50,green,bright_green,game_loop)
-    button("Quit",150,450,100,50,red,bright_red,"quit")
+        button("Continue",150,450,100,50,green,bright_green,unpause)
+        button("Quit",550,450,100,50,red,bright_red,quitgame)
     
-    pygame.display.update()
-    clock.tick(15)
+        pygame.display.update()
+        clock.tick(15)
 
 def game_intro():
     intro = True
     while intro:
         for event in pygame.event.get():
-            print(event)
+            #print(event)
             if event.type == pygame.QUIT:
                 pygame.quit()
                 quit()
                 
         gameDisplay.fill(white)
-        large_text = pygame.font.Font('freesansbold.ttf',115)
+        large_text = pygame.font.SysFont("comicsansms",115)
         TextSurf, TextRect = text_objects("evasion",large_text)
         TextRect.center = ((display_width/2),(display_height/2))
         gameDisplay.blit(TextSurf,TextRect)
 
         button("GO!",150,450,100,50,green,bright_green,game_loop)
-        button("QUIT!",350,450,100,50,red,bright_red,quitgame)
+        button("QUIT!",550,450,100,50,red,bright_red,quitgame)
     
         pygame.display.update()
         clock.tick(15)
-    
-##def message_display(text):
-##    large_text = pygame.font.Font('freesansbold.ttf',115)
-##    TextSurf, TextRect = text_objects(text,large_text)
-##    TextRect.center = ((display_width/2),(display_height/2))
-##    gameDisplay.blit(TextSurf,TextRect)
-##
-##    button("GO!",150,450,100,50,green,bright_green)
-##    button("QUIT!",150,450,100,50,red,bright_red)
-##    
-##    pygame.display.update()
-##    time.sleep(2)
-##    game_loop()
 
 def game_loop():
     global pause
+    pygame.mixer.music.load("jazz.wav")
     pygame.mixer.music.play(-1)
 
-    #game_intro()
     x = (display_width * 0.45)
     y = (display_height * 0.8)
 
@@ -171,13 +157,16 @@ def game_loop():
     thing_speed = 4
     thing_width = 100
     thing_height = 100
+
+    thingCount = 1
     
     gameExit = False
 
     while not gameExit:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                gameExit = True
+                pygame.quit()
+                quit()
                 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_LEFT:
@@ -197,7 +186,7 @@ def game_loop():
         gameDisplay.fill(white)
 
         #things(thingx,thingy,thingw,thingh,color):
-        things(thing_startx,thing_starty,thing_width,thing_height,black)
+        things(thing_startx,thing_starty,thing_width,thing_height,block_color)
         thing_starty += thing_speed
         car(x,y)
         things_dodged(dodged)
