@@ -14,7 +14,8 @@ Five files apart from README.md file
    - crash.wav : Crash sound to reveal you have crashed your car into the block.
    - jazz.wav : Music that plays till you crash into the block.
    - save_car.png : Image of the car that you need to save. 
-
+   - game_video.webm : Demo of the game.
+   
 Rules:
    You need to save your car from the blocks falling from random position.
    With time blocks will manipulate their speed and size.
