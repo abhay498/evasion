@@ -4,6 +4,8 @@ EVASION
 
 A game developed using Python's pygame library.
 
+[Alt](https://github.com/abhay498/evasion/blob/master/evasion.gif)
+
 Coding:
 The coding has been done using Python 3 series conforming to PEP-8 style.
 The video demo can be seen under name game_video
